@@ -2,7 +2,7 @@
 
 ## Demo video
 
-The unlisted demo link will be added after the complete order-to-RabbitMQ flow is verified.
+The unlisted demo link will be added after the browser-only recording is complete.
 
 ## Service repositories
 
@@ -14,7 +14,7 @@ The unlisted demo link will be added after the complete order-to-RabbitMQ flow i
 
 ### Configuration and backing services
 
-I updated the order service to read its RabbitMQ connection string and listening port from environment variables. The product service now reads its port from the environment and loads an optional local `.env` file. This lets the services use deployment-specific settings without hard-coding them in the source. The intended order-service configuration uses the RabbitMQ VM's address and a dedicated application account; its end-to-end connection is still pending verification.
+I updated the order service to read its RabbitMQ connection string and listening port from environment variables. The product service now reads its port from the environment and loads an optional local `.env` file. This lets the services use deployment-specific settings without hard-coding them in the source. In the Azure deployment, the Order Service uses the RabbitMQ VM's public address and a dedicated application account as its backing service.
 
 ### Environment variables
 
@@ -28,13 +28,13 @@ Separate repositories give each microservice its own history, dependencies, test
 
 This submission uses four dedicated Azure VMs. The final unlisted demo will show their names, regions, sizes, and public IPs.
 
-## Verification checklist
+## Verification evidence
 
-- [ ] The three service repositories contain the updated source, dependency manifests, lockfiles, and `.env.example` files.
-- [ ] Each service runs on its own VM, and the Store Front loads products from the Product Service.
-- [ ] An order through the Store Front reaches the Order Service and is published to RabbitMQ.
-- [ ] `rabbitmqctl list_queues name durable messages` shows the durable `order_queue` and an increased message count after an order.
+- [x] The three service repositories contain the updated source, dependency manifests, lockfiles, and `.env.example` files.
+- [x] Each service runs on its own VM, and the Store Front loads products from the Product Service.
+- [x] An order through the Store Front reaches the Order Service and is published to RabbitMQ.
+- [x] `rabbitmqctl list_queues name durable messages` shows the durable `order_queue` and an increased message count after an order.
 - [ ] The demo shows all four VM public IPs and the environment-based configuration without revealing credentials.
 - [ ] The unlisted YouTube demo link is added above and the submission repository is public.
 
-Do not add local `.env` files, RabbitMQ credentials, or private keys to this repository. Check items only after verifying them against the running deployment or published repository.
+Do not add local `.env` files, RabbitMQ credentials, or private keys to this repository. Replace every TODO and check each item only after verifying it against the running deployment or published repository.
