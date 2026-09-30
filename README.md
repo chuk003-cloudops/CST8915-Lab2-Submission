@@ -14,7 +14,7 @@ The unlisted demo link will be added after the complete order-to-RabbitMQ flow i
 
 ### Configuration and backing services
 
-I updated the order service to read its RabbitMQ connection string and listening port from environment variables. The product service now reads its port from the environment and loads an optional local `.env` file. This lets the services use deployment-specific settings without hard-coding them in the source. In the Azure deployment, the order service connects to RabbitMQ through the broker VM's address and its application account.
+I updated the order service to read its RabbitMQ connection string and listening port from environment variables. The product service now reads its port from the environment and loads an optional local `.env` file. This lets the services use deployment-specific settings without hard-coding them in the source. The intended order-service configuration uses the RabbitMQ VM's address and a dedicated application account; its end-to-end connection is still pending verification.
 
 ### Environment variables
 
