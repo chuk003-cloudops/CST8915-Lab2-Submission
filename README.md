@@ -2,7 +2,9 @@
 
 ## Demo video
 
-The unlisted demo link will be added after the browser-only recording is complete.
+[Watch the unlisted CST8915 Lab 2 demo](https://youtu.be/23epkCsw2ns)
+
+The demo records the Azure virtual machines and service configuration, places a storefront order, and verifies that the durable RabbitMQ order queue increments.
 
 ## Service repositories
 
@@ -14,11 +16,11 @@ The unlisted demo link will be added after the browser-only recording is complet
 
 ### Configuration and backing services
 
-I updated the order service to read its RabbitMQ connection string and listening port from environment variables. The product service now reads its port from the environment and loads an optional local `.env` file. This lets the services use deployment-specific settings without hard-coding them in the source. In the Azure deployment, the Order Service uses the RabbitMQ VM's public address and a dedicated application account as its backing service.
+The Order Service reads its RabbitMQ connection string and listening port from environment variables. The Product Service reads its port from the environment and loads an optional local .env file. Deployment-specific settings stay outside the application code. In the Azure deployment, the Order Service connects to RabbitMQ through a dedicated application account. No credentials are committed to these repositories.
 
 ### Environment variables
 
-Environment variables let the same application code run in different environments with different addresses, ports, and credentials. They keep deployment settings out of source code and make it easier to change configuration without editing application logic. The store front only needs public API URLs; its browser-visible `VUE_APP_` settings must not contain secrets.
+Environment variables let the same application code run in different environments with different addresses, ports, and credentials. They keep deployment settings out of source code and make it easier to change configuration without editing application logic. The Store Front uses public API URLs; browser-visible VUE_APP_ settings must not contain secrets.
 
 ### Separate service repositories
 
@@ -26,15 +28,15 @@ Separate repositories give each microservice its own history, dependencies, test
 
 ## Deployment notes
 
-This submission uses four dedicated Azure VMs. The final unlisted demo will show their names, regions, sizes, and public IPs.
+The demo uses four dedicated Azure VMs for the Order Service, Product Service, RabbitMQ, and Store Front. The video shows the VM names and public IP addresses, service configuration, a successful storefront order, and the resulting queue count. The VMs were stopped and deallocated after verification to avoid ongoing compute charges; start them in Azure before reproducing the live demo.
 
 ## Verification evidence
 
-- [x] The three service repositories contain the updated source, dependency manifests, lockfiles, and `.env.example` files.
-- [x] Each service runs on its own VM, and the Store Front loads products from the Product Service.
-- [x] An order through the Store Front reaches the Order Service and is published to RabbitMQ.
-- [x] `rabbitmqctl list_queues name durable messages` shows the durable `order_queue` and an increased message count after an order.
-- [ ] The demo shows all four VM public IPs and the environment-based configuration without revealing credentials.
-- [ ] The unlisted YouTube demo link is added above and the submission repository is public.
+- [x] The three service repositories contain the refactored source, dependency manifests, lockfiles, and .env.example files.
+- [x] Each service was verified on its own VM, and the Store Front loaded products from the Product Service.
+- [x] An order through the Store Front reached the Order Service and was published to RabbitMQ.
+- [x] rabbitmqctl list_queues name durable messages showed the durable order_queue and an increased message count after an order.
+- [x] The unlisted video shows all four VM names and public IPs plus environment-based configuration without revealing credentials.
+- [x] This public submission repository includes the unlisted video link.
 
-Do not add local `.env` files, RabbitMQ credentials, or private keys to this repository. Replace every TODO and check each item only after verifying it against the running deployment or published repository.
+Do not add local .env files, RabbitMQ credentials, or private keys to this repository.
